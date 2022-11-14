@@ -1,11 +1,9 @@
-//Environment variable
-//Now one thing is need to improve the hard coded port value 3000 unlikely to work in production evironment.
-//Because when deploy this application to a hosting environment the port is dynamically assigned by the hosting environment.
-//so can't rely on 3000 available.
-//Way to fix this is Environment Variable.
-// An environment variable is basically a variable that is a part of the environment in which a process run.
-//Its value is set outside this application.
-//export PORT=5000
+//Route Parameters
+//In order to get a single course, you should include the ID of the course in the url so our endpoint should be like this
+// /api/courses/1
+// 1 is the ID of the course
+
+
 
 const express = require('express'); 
 const app = express(); 
@@ -20,6 +18,10 @@ app.get('/', (req,res)=>
 app.get('/api/courses', (req,res) => {
     res.send([1,2,3]);
 });
+
+app.get('/api/courses/:id', (req, res) => {
+    res.send(req.params.id);
+})
 
 //PORTS
 const port = process.env.PORT || 3000;
