@@ -1,4 +1,8 @@
-//Handling HTTP POST Requests
+//Calling Endpoints Using Postman
+//install postman extension on chrome
+// new http request -> post -> enter url and in body select raw and json/application 
+//create json
+//send
 
 
 const express = require('express'); 
@@ -7,6 +11,7 @@ const app = express();
 app.use(express.json()); //for parsing up json objects in the body of the request. Because by default this feature is not enabled in express.
                         //when we call express.json method, this method returns a piece of middleware and then we call app.use to use that middleware in the 
                         // processing pipeline.
+
 
 const courses = [
     {id:1, name:'course1'},
@@ -21,22 +26,26 @@ app.get('/', (req,res)=>
                  
 app.get('/api/courses', (req,res) => {
     res.send(courses);
+}); 
+
+app.post('/api/courses', (req,res) => {
+    const course = {
+        id: courses.length + 1 ,
+        name: req.body.name
+    };
+    courses.push(course);
+    
+    res.send(course);
 });
+
 
 app.get('/api/courses/:id', (req, res) => {
     const course = courses.find(c => c.id === parseInt(req.params.id));
     if (!course) res.status(404).send('The course with given ID was not found');
     res.send(course);
-});
+}); 
 
-app.get('/api/courses', (req,res)=> {
-    const course = {
-        id: courses.length + 1,
-        name: req.body.name
-    };
-    courses.push(course);
-    res.send(course);
-});
+
 
 //PORTS
 const port = process.env.PORT || 3000;
