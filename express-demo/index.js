@@ -1,17 +1,12 @@
-//Calling Endpoints Using Postman
-//install postman extension on chrome
-// new http request -> post -> enter url and in body select raw and json/application 
-//create json
-//send
+//Input Validation
+// You should never ever trust what client input sends to you.
+//You should always validate it.
 
 
 const express = require('express'); 
 const app = express(); 
 
-app.use(express.json()); //for parsing up json objects in the body of the request. Because by default this feature is not enabled in express.
-                        //when we call express.json method, this method returns a piece of middleware and then we call app.use to use that middleware in the 
-                        // processing pipeline.
-
+app.use(express.json()); 
 
 const courses = [
     {id:1, name:'course1'},
@@ -29,6 +24,13 @@ app.get('/api/courses', (req,res) => {
 }); 
 
 app.post('/api/courses', (req,res) => {
+
+    if(!req.body.name || req.body.name.length < 3) {
+        //400 Bad Request
+        res.status(400).send('Name is required and should be minimum 3 characters');
+        return;
+    }
+    
     const course = {
         id: courses.length + 1 ,
         name: req.body.name
