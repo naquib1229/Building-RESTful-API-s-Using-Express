@@ -1,4 +1,7 @@
-// Creating custom Middleware in separate module
+// Built in Middleware 
+//ex- express.json(), express.urlencoded(), express.static()
+//urlencode
+//in postman post enter url > body > x-www-form-urlencode > fill key value pair
 
 const Joi = require('joi');
 const logger = require('./logger');
@@ -6,13 +9,11 @@ const express = require('express');
 const app = express(); 
 
 app.use(express.json()); 
+app.use(express.urlencoded({extended: true}));
 
 app.use(logger);
 
-app.use(function(req, res, next) {
-    console.log('Authenticating...');
-    next();
-});
+
 
 const courses = [
     {id:1, name:'course1'},
