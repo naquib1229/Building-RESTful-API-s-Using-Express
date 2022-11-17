@@ -1,8 +1,7 @@
 // Built in Middleware 
 //ex- express.json(), express.urlencoded(), express.static()
-//urlencode
-//in postman post enter url > body > x-www-form-urlencode > fill key value pair
-
+//By using static we can server static content
+//ex- serving readme.txt by storing it in publc folder mentioned below by url localhost:3000/readme.txt
 const Joi = require('joi');
 const logger = require('./logger');
 const express = require('express'); 
@@ -10,6 +9,7 @@ const app = express();
 
 app.use(express.json()); 
 app.use(express.urlencoded({extended: true}));
+app.use(express.static('public'));
 
 app.use(logger);
 
