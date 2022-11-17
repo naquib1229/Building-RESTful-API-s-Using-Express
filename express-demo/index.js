@@ -1,4 +1,4 @@
-//Handling DELETE Request
+// Creating custom Middleware 
 
 const Joi = require('joi');
 const express = require('express'); 
@@ -6,6 +6,16 @@ const func = require('joi/lib/types/func');
 const app = express(); 
 
 app.use(express.json()); 
+
+app.use(function(req, res, next) {
+    console.log('Logging...');
+    next();
+});
+
+app.use(function(req, res, next) {
+    console.log('Authenticating...');
+    next();
+});
 
 const courses = [
     {id:1, name:'course1'},
