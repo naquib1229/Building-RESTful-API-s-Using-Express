@@ -1,15 +1,16 @@
-// Built in Middleware 
-//ex- express.json(), express.urlencoded(), express.static()
-//By using static we can server static content
-//ex- serving readme.txt by storing it in publc folder mentioned below by url localhost:3000/readme.txt
+// Third party Middleware 
+const morgan = require('morgan');
+const helmet = require('helmet');
 const Joi = require('joi');
 const logger = require('./logger');
 const express = require('express'); 
 const app = express(); 
 
+app.use(helmet());
 app.use(express.json()); 
 app.use(express.urlencoded({extended: true}));
 app.use(express.static('public'));
+app.use(morgan('tiny'));
 
 app.use(logger);
 
