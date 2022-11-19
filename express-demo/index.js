@@ -1,13 +1,14 @@
-// Debugging
-//generally we use console.log for debugging but afterward we either delete or comment out these console.log
-//but if we need to debugging again we have to write those console.log again which is tedious task, 
-//to overcome this there is package called debug which we can control them by environment variables
-//npm i debug
-//export DEBUG=app:startup
-// for multiple debug    export DEBUG=app:startup,app:
-//for all       export DEBUG=app:*
-//set environment variable and run the index.js in one go
-//DEBUG=app:db node index.js
+// templating Engines
+//Examples- pug, Mustache, EJS
+//A template engine enables you to use static template files in your application. 
+//At runtime, the template engine replaces variables in a template file with actual values,
+// and transforms the template into an HTML file sent to the client. This approach makes it easier to design an HTML page.
+// npm i pug
+// in ./views folder created index.pug
+//render
+
+
+
 
 
 const startupDebugger = require('debug')('app:startup');
@@ -20,6 +21,8 @@ const logger = require('./logger');
 const express = require('express'); 
 const app = express(); 
 
+app.set('view engine', 'pug'); //express internally load pug no need of require
+app.set('views', './views'); //optional and default ./views is the location where all views are stored
 
 app.use(helmet());
 app.use(express.json()); 
@@ -48,9 +51,9 @@ const courses = [
 ];
 
 app.get('/', (req,res)=>  
-                 {
-                    res.send('Hello world !!!');
-                 });
+    {
+    res.render('index', {title:'My Express App', message: 'Hello'});
+    });
                  
 app.get('/api/courses', (req,res) => {
     res.send(courses);
