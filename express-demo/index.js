@@ -1,12 +1,17 @@
-// Configuration
-//storing password etc in environment variable and accessing it by using configuration file custom-environment-variables.json.
-//In this file we define mapping configuration setting to environment variable=
-//We should not save password like stuff in configuration
-//Instead we use environment variable to store
-//export app_password=1234
-//In development we can set environment variable manually but in
-// production we have configuration panel to storing environment variable
+// Debugging
+//generally we use console.log for debugging but afterward we either delete or comment out these console.log
+//but if we need to debugging again we have to write those console.log again which is tedious task, 
+//to overcome this there is package called debug which we can control them by environment variables
+//npm i debug
+//export DEBUG=app:startup
+// for multiple debug    export DEBUG=app:startup,app:
+//for all       export DEBUG=app:*
+//set environment variable and run the index.js in one go
+//DEBUG=app:db node index.js
 
+
+const startupDebugger = require('debug')('app:startup');
+const dbDebugger = require('debug')('app:db');
 const config = require('config');
 const morgan = require('morgan');
 const helmet = require('helmet');
@@ -28,8 +33,11 @@ console.log('Mail Password  ' + config.get('mail.password') );
 
 if(app.get('env') === 'development') {
   app.use(morgan('tiny'));  
-  console.log('Morgan enabled....');
+  startupDebugger('Morgan enabled....');
 }
+
+//DB work..
+dbDebugger('connected to the database....');
 
 app.use(logger);
 
