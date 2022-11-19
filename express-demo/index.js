@@ -1,11 +1,11 @@
 // Configuration
-//famous configuration package npm rc
-//mosh favourite npm config
-//npm i config
-//create config folder
-//in config create default.json
-// create development.json here we add settings specific to development environment can overwrite or add additional settings
-//similarly production.json
+//storing password etc in environment variable and accessing it by using configuration file custom-environment-variables.json.
+//In this file we define mapping configuration setting to environment variable=
+//We should not save password like stuff in configuration
+//Instead we use environment variable to store
+//export app_password=1234
+//In development we can set environment variable manually but in
+// production we have configuration panel to storing environment variable
 
 const config = require('config');
 const morgan = require('morgan');
@@ -23,7 +23,8 @@ app.use(express.static('public'));
 
 //Configuration
 console.log('Application Name ' + config.get('name'));
-console.log('Application Host Name ' + config.get('mail.host'));
+console.log('Mail Server  ' + config.get('mail.host'));
+console.log('Mail Password  ' + config.get('mail.password') );
 
 if(app.get('env') === 'development') {
   app.use(morgan('tiny'));  
