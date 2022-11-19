@@ -1,4 +1,8 @@
-// Third party Middleware 
+// Envrironmnet variable
+//process.env.NODE_ENV //By default undefined
+//app.get('env'); //By default development
+//export NODE_ENV=production
+
 const morgan = require('morgan');
 const helmet = require('helmet');
 const Joi = require('joi');
@@ -6,15 +10,18 @@ const logger = require('./logger');
 const express = require('express'); 
 const app = express(); 
 
+
 app.use(helmet());
 app.use(express.json()); 
 app.use(express.urlencoded({extended: true}));
 app.use(express.static('public'));
-app.use(morgan('tiny'));
+
+if(app.get('env') === 'development') {
+  app.use(morgan('tiny'));  
+  console.log('Morgan enabled....');
+}
 
 app.use(logger);
-
-
 
 const courses = [
     {id:1, name:'course1'},
