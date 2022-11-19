@@ -1,8 +1,13 @@
-// Envrironmnet variable
-//process.env.NODE_ENV //By default undefined
-//app.get('env'); //By default development
-//export NODE_ENV=production
+// Configuration
+//famous configuration package npm rc
+//mosh favourite npm config
+//npm i config
+//create config folder
+//in config create default.json
+// create development.json here we add settings specific to development environment can overwrite or add additional settings
+//similarly production.json
 
+const config = require('config');
 const morgan = require('morgan');
 const helmet = require('helmet');
 const Joi = require('joi');
@@ -15,6 +20,10 @@ app.use(helmet());
 app.use(express.json()); 
 app.use(express.urlencoded({extended: true}));
 app.use(express.static('public'));
+
+//Configuration
+console.log('Application Name ' + config.get('name'));
+console.log('Application Host Name ' + config.get('mail.host'));
 
 if(app.get('env') === 'development') {
   app.use(morgan('tiny'));  
